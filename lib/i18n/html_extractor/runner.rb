@@ -19,31 +19,11 @@ module I18n
           next unless confirm 'Create a translation?', 'Yes', 'No', default: 'Yes'
 
           node.key = prompt 'Choose i18n key', default: node.key
-
           node.replace_text!
 
-          serialize_erb!(document, file)
+          document.save!(file)
 
-          i18n = I18n::Tasks::BaseTask.new
-
-          new_keys = i18n.missing_keys(locales: [I18n.default_locale]).set_each_value!(node.text)
-          i18n.data.merge! new_keys
-          puts "Added t(.#{node.key}), translated in #{I18n.default_locale} as #{node.text}:".green
-          puts new_keys.inspect
-
-          I18n.available_locales.each do |locale|
-            next if locale == I18n.default_locale
-            answer = nil
-            while answer.blank?
-              print "Insert translation for #{locale}: "
-              answer = STDIN.gets.strip
-            end
-            new_keys = i18n.missing_keys(locales: [locale.to_s])
-                           .set_each_value!(answer)
-            i18n.data.merge! new_keys
-            puts "Added t(.#{node.key}), translated in #{locale} as #{answer}:".green
-            puts new_keys.inspect
-          end
+          add_translations! node.key, node.text
           puts
         end
       end
@@ -58,6 +38,30 @@ module I18n
       end
 
       private
+
+      def add_translations!(key, text)
+        default_text = prompt "Choose #{I18n.default_locale} value", default: text
+        add_translation! I18n.default_locale, key, default_text
+
+        I18n.available_locales.each do |locale|
+          next if locale == I18n.default_locale
+
+          text = prompt "Choose #{locale} value"
+
+          add_translation! locale.to_s, key, text
+        end
+      end
+
+      def add_translation!(locale, key, value)
+        new_keys = i18n.missing_keys(locales: [locale]).set_each_value!(value)
+        i18n.data.merge! new_keys
+        puts "Added t(.#{key}), translated in #{locale} as #{value}:".green
+        puts new_keys.inspect
+      end
+
+      def i18n
+        I18n::Tasks::BaseTask.new
+      end
 
       def each_translation
         @files.each do |file|

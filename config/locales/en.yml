@@ -1,0 +1,9 @@
+---
+en:
+  folder:
+    nested:
+      hi: Hi
+  layout:
+    hi: Hi
+  test:
+    hi: Hi

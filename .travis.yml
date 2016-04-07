@@ -1,0 +1,15 @@
+script: "export JRUBY_OPTS='-X+O -J-Djruby.launch.inproc=false -J-Xmx1024m -J-XX:MaxPermSize=2048m'"
+language: ruby
+cache: bundler
+sudo: false
+rvm:
+  - 2.3.0
+  - 2.2.4
+  - 2.0.0
+  - jruby-1.7.23
+  - jruby-9.0.4.0
+matrix:
+  include:
+    - rvm: 2.3.0
+      script: "bundle exec rubocop"
+      env: "RUBOCOP=true"

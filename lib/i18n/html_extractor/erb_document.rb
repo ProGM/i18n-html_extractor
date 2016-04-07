@@ -3,23 +3,25 @@ require 'nokogiri'
 module I18n
   module HTMLExtractor
     class ErbDocument
+      ERB_REGEXPS = [
+        I18n::HTMLExtractor::TwoWayRegexp.new(/<%=(?<inner_text>.+?)%>/m, /@@=(?<inner_text>[a-z0-9\-]+)@@/m),
+        I18n::HTMLExtractor::TwoWayRegexp.new(/<%#(?<inner_text>.+?)%>/m, /@@#(?<inner_text>[a-z0-9\-]+)@@/m),
+        I18n::HTMLExtractor::TwoWayRegexp.new(/<%(?<inner_text>.+?)%>/m, /@@(?<inner_text>[a-z0-9\-]+)@@/m)
+      ].freeze
+
       attr_reader :erb_directives
       def initialize(document, erb_directives)
         @document = document
         @erb_directives = erb_directives
       end
 
-      def serialize(filename)
+      def save!(filename)
         File.open(filename, 'w') do |f|
-          result = doc.to_html(indent: 2, encoding: 'UTF-8')
-          result.gsub!(/@@=([a-z0-9\-]+)@@/) do |data|
-            "<%= #{doc.erb_directives[data].strip} %>"
-          end
-          result.gsub!(/@@#([a-z0-9\-]+)@@/) do |data|
-            "<%# #{doc.erb_directives[data].strip} %>"
-          end
-          result.gsub!(/@@([a-z0-9\-]+)@@/) do |data|
-            "<% #{doc.erb_directives[data].strip} %>"
+          result = @document.to_html(indent: 2, encoding: 'UTF-8')
+          ERB_REGEXPS.each do |regexp|
+            regexp.inverse_replace!(result) do |string_format, data|
+              string_format % { inner_text: erb_directives[data[:inner_text]] }
+            end
           end
           f.write result
         end
@@ -38,18 +40,21 @@ module I18n
             file.read(nil, file_content)
 
             erb_directives = extract_erb_directives! file_content
-
-            document = if file_content.start_with?('<!DOCTYPE')
-                         Nokogiri::HTML(file_content)
-                       else
-                         Nokogiri::HTML.fragment(file_content)
-                       end
+            document = create_document(file_content)
           end
           log_errors(document.errors, file_content) if verbose
           ErbDocument.new(document, erb_directives)
         end
 
         private
+
+        def create_document(file_content)
+          if file_content.start_with?('<!DOCTYPE')
+            Nokogiri::HTML(file_content)
+          else
+            Nokogiri::HTML.fragment(file_content)
+          end
+        end
 
         def log_errors(errors, file_content)
           return if errors.empty?
@@ -60,16 +65,14 @@ module I18n
           end
         end
 
-        ERB_REGEXPS = [/<%=(.+?)%>/m, /<%#(.+?)%>/m, /<%(.+?)%>/m].freeze
-        ERB_PATTERNS = ['@@=%s@@', '@@#%s@@', '@@%s@@'].freeze
-
         def extract_erb_directives!(text)
           erb_directives = {}
-          ERB_REGEXPS.each_with_index do |regexp, i|
-            text.gsub!(regexp) do
-              key = ERB_PATTERNS[i] % SecureRandom.uuid
-              erb_directives[key] = Regexp.last_match(1)
-              key
+
+          ERB_REGEXPS.each do |regexp|
+            regexp.replace!(text) do |string_format, data|
+              key = SecureRandom.uuid
+              erb_directives[key] = data[:inner_text]
+              string_format % { inner_text: key }
             end
           end
           erb_directives
