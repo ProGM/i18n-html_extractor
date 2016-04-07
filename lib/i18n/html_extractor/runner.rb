@@ -29,6 +29,13 @@ module I18n
       end
 
       def run
+        each_translation do |file, document, node|
+          puts "Found \"#{node.text}\" in #{file}:#{node.text}".green
+          node.replace_text!
+          document.save!(file)
+
+          add_translation! I18n.default_locale, node.key, node.text
+        end
       end
 
       def test_run
