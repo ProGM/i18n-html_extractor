@@ -1,6 +1,6 @@
 namespace :i18n do
   namespace :extract_html do
-    task :interactive, [:file_pattern] do |_, args|
+    task :interactive, [:file_pattern, :locale] do |_, args|
       i18n = I18n::Tasks::BaseTask.new
 
       missing_translations = i18n.missing_keys

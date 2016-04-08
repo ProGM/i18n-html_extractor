@@ -4,12 +4,8 @@ module I18n
       include Cli
 
       def initialize(args = {})
-        @files = if args[:file_pattern]
-                   Dir[Rails.root.join(args[:file_pattern])]
-                 else
-                   Dir[Rails.root.join('app', 'views', '**', '*.erb')] -
-                     Dir[Rails.root.join('app', 'views', '**', '*.*.*.erb')]
-                 end
+        @files = file_list_from_pattern(args[:file_pattern])
+        @locale = args[:locale].presence
         @verbose = args[:verbose]
       end
 
@@ -23,7 +19,7 @@ module I18n
 
           document.save!(file)
 
-          add_translations! node.key, node.text
+          add_translations! node.key, node.text, default_locale: @locale
           puts
         end
       end
@@ -46,17 +42,29 @@ module I18n
 
       private
 
-      def add_translations!(key, text)
-        default_text = prompt "Choose #{I18n.default_locale} value", default: text
-        add_translation! I18n.default_locale, key, default_text
+      def file_list_from_pattern(pattern)
+        if pattern.present?
+          Dir[Rails.root.join(pattern)]
+        else
+          Dir[Rails.root.join('app', 'views', '**', '*.erb')] -
+            Dir[Rails.root.join('app', 'views', '**', '*.*.*.erb')]
+        end
+      end
+
+      def add_translations!(key, text, default_locale: nil)
+        return prompt_and_add_translation!(default_locale, key, default_text: text) if default_locale
+        prompt_and_add_translation!(I18n.default_locale, key, default_text: text)
 
         I18n.available_locales.each do |locale|
           next if locale == I18n.default_locale
 
-          text = prompt "Choose #{locale} value"
-
-          add_translation! locale.to_s, key, text
+          prompt_and_add_translation!(locale.to_s, key)
         end
+      end
+
+      def prompt_and_add_translation!(locale, key, default_text: nil)
+        out_text = prompt "Choose #{locale} value", default: default_text
+        add_translation! locale, key, out_text
       end
 
       def add_translation!(locale, key, value)

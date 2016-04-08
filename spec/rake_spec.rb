@@ -21,6 +21,7 @@ describe 'tasks' do
           end.to output(/Found "Hello".*/).to_stdout
         end.not_to raise_exception
       end.to change { File.read('spec/tmp/folder/minimal/file.html.erb') }.to('<%= link_to t(\'.hello\') %>')
+        .and(change { File.read('spec/tmp/folder/minimal/bug.html.erb') }.to('<div><%=t(\'.hello\')%></div>'))
     end
   end
 
