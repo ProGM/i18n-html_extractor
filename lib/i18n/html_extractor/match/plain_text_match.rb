@@ -7,9 +7,9 @@ module I18n
         end
 
         def replace_text!
-          key = "@@=#{SecureRandom.uuid}@@"
+          key = SecureRandom.uuid
           document.erb_directives[key] = translation_key_object
-          node.content = key
+          node.content = "@@=#{key}@@"
         end
       end
     end

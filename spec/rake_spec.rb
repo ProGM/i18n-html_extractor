@@ -13,7 +13,7 @@ describe 'tasks' do
   end
 
   describe 'i18n:extract_html:auto' do
-    it 'Returns a list of matched data' do
+    it 'Returns and replaces a list of matched data' do
       expect do
         expect do
           expect do
@@ -25,13 +25,14 @@ describe 'tasks' do
   end
 
   describe 'i18n:extract_html:interactive' do
-    it 'Returns a list of matched data' do
+    it 'Returns and replaces list of matched data' do
       allow(STDIN).to receive(:gets).and_return('y')
       expect do
         expect do
           Rake::Task['i18n:extract_html:interactive'].invoke('spec/tmp/folder/minimal/*.erb')
         end.to output(/Found "Hello".*/).to_stdout
       end.to change { File.read('spec/tmp/folder/minimal/file.html.erb') }.to('<%= link_to t(\'.y\') %>')
+        .and(change { File.read('spec/tmp/folder/minimal/bug.html.erb') }.to('<div><%=t(\'.y\')%></div>'))
     end
   end
 end
