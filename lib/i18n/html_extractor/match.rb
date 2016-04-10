@@ -3,6 +3,7 @@ require 'i18n/html_extractor/match/base_match'
 require 'i18n/html_extractor/match/erb_directive_match'
 require 'i18n/html_extractor/match/placeholder_match'
 require 'i18n/html_extractor/match/plain_text_match'
+
 module I18n
   module HTMLExtractor
     module Match
@@ -22,12 +23,11 @@ module I18n
         def erb_nodes(document)
           document.erb_directives.map do |fragment_id, _|
             ErbDirectiveMatch.create(document, fragment_id)
-          end.compact
+          end.flatten.compact
         end
 
         def plain_text_nodes(document)
-          leaf_nodes.reject { |n| n.text =~ /\@\@(=?)[a-z0-9\-]+\@\@/ }
-                    .map! { |node| PlainTextMatch.create(document, node) }.compact
+          leaf_nodes.map! { |node| PlainTextMatch.create(document, node) }.flatten.compact
         end
 
         def form_fields(document)
@@ -35,7 +35,7 @@ module I18n
                   .reject { |n| n['placeholder'] =~ /\@\@(=?)[a-z0-9\-]+\@\@/ }
                   .map! do |node|
             PlaceholderMatch.create(document, node)
-          end
+          end.flatten.compact
         end
 
         def leaf_nodes

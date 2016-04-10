@@ -3,13 +3,17 @@ module I18n
     module Match
       class PlaceholderMatch < BaseMatch
         def self.create(document, node)
-          new(document, node, node['placeholder'])
+          if node['placeholder'].present?
+            [new(document, node, node['placeholder'])]
+          else
+            []
+          end
         end
 
         def replace_text!
-          key = "@@=#{SecureRandom.uuid}@@"
+          key = SecureRandom.uuid
           document.erb_directives[key] = translation_key_object
-          node['placeholder'] = key
+          node['placeholder'] = "@@=#{key}@@"
         end
       end
     end

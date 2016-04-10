@@ -33,16 +33,17 @@ module I18n
 
       class <<self
         def parse(filename, verbose: false)
-          document = nil
           file_content = ''
-          erb_directives = {}
           File.open(filename) do |file|
             file.read(nil, file_content)
-
-            erb_directives = extract_erb_directives! file_content
-            document = create_document(file_content)
+            return parse_string(file_content, verbose: verbose)
           end
-          log_errors(document.errors, file_content) if verbose
+        end
+
+        def parse_string(string, verbose: false)
+          erb_directives = extract_erb_directives! string
+          document = create_document(string)
+          log_errors(document.errors, string) if verbose
           ErbDocument.new(document, erb_directives)
         end
 
