@@ -1,6 +1,4 @@
-# frozen_string_literal: true
-
-SPEC_DIR = 'spec/tmp/folder/minimal'
+spec_dir = "#{Rails.root}/spec/tmp/folder/minimal"
 
 describe 'tasks' do
   before(:each) { FileUtils.cp_r("#{Rails.root}/spec/files", "#{Rails.root}/spec/tmp") }
@@ -21,13 +19,13 @@ describe 'tasks' do
       expect do
         expect do
           expect do
-            Rake::Task['i18n:extract_html:auto'].invoke("#{SPEC_DIR}/*.erb")
+            Rake::Task['i18n:extract_html:auto'].invoke("#{spec_dir}/*.erb")
           end.to output(/Found "Hello".*/).to_stdout
         end.not_to raise_exception
       end.to change {
-        File.read("#{SPEC_DIR}/file.html.erb")
+        File.read("#{spec_dir}/file.html.erb")
       }.to('<%= link_to t(\'.hello\') %>').and change {
-        File.read("#{SPEC_DIR}/bug.html.erb")
+        File.read("#{spec_dir}/bug.html.erb")
       }.to('<div><%=t(\'.hello\')%></div>')
     end
   end
@@ -37,12 +35,12 @@ describe 'tasks' do
       allow($stdin).to receive(:gets).and_return('y')
       expect do
         expect do
-          Rake::Task['i18n:extract_html:interactive'].invoke("#{SPEC_DIR}/minimal/*.erb")
+          Rake::Task['i18n:extract_html:interactive'].invoke("#{spec_dir}/*.erb")
         end.to output(/Found "Hello".*/).to_stdout
       end.to change {
-        File.read("#{SPEC_DIR}/minimal/file.html.erb")
+        File.read("#{spec_dir}/file.html.erb")
       }.to('<%= link_to t(\'.y\') %>').and(change do
-        File.read("#{SPEC_DIR}/minimal/bug.html.erb")
+        File.read("#{spec_dir}/bug.html.erb")
       end.to('<div><%=t(\'.y\')%></div>'))
     end
   end

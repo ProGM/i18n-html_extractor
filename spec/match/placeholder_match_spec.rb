@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 
 describe I18n::HTMLExtractor::Match::PlaceholderMatch do
   let(:document) do
