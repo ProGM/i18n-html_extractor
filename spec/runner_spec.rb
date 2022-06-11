@@ -12,7 +12,7 @@ describe I18n::HTMLExtractor::Runner do
 
   describe '#run_interactive' do
     it 'replaces text in files' do
-      pp 'HELLO'
+      skip 'TODO'
     end
   end
 

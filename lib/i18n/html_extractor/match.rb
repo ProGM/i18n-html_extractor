@@ -5,6 +5,7 @@ require 'i18n/html_extractor/match/base_match'
 require 'i18n/html_extractor/match/erb_directive_match'
 require 'i18n/html_extractor/match/placeholder_match'
 require 'i18n/html_extractor/match/plain_text_match'
+require 'i18n/html_extractor/match/aria_label_match'
 
 module I18n
   module HTMLExtractor
@@ -17,7 +18,7 @@ module I18n
         end
 
         def matches
-          erb_nodes(document) + plain_text_nodes(document) + form_fields(document)
+          erb_nodes(document) + plain_text_nodes(document) + form_fields(document) + aria_labels(document)
         end
 
         private
@@ -37,6 +38,14 @@ module I18n
                   .reject { |n| n['placeholder'] =~ /@@(=?)[a-z0-9\-]+@@/ }
                   .map! do |node|
             PlaceholderMatch.create(document, node)
+          end.flatten.compact
+        end
+
+        def aria_labels(document)
+          document.css('[aria-label]').select { |el| el['aria-label'].present? }
+                  .reject { |n| n['aria-label'] =~ /@@(=?)[a-z0-9\-]+@@/ }
+                  .map! do |node|
+            AriaLabelMatch.create(document, node)
           end.flatten.compact
         end
 
