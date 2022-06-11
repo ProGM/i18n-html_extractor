@@ -16,7 +16,7 @@ describe I18n::HTMLExtractor::Runner do
 
   describe '#test_run' do
     it 'lists all files that contains text to be extracted' do
-      expect { subject.test_run }.to output(%r{Found ".+" in [a-zA-Z\/\-\.]+}).to_stdout
+      expect { subject.test_run }.to output(%r{Found ".+" in [a-zA-Z/\-.]+}).to_stdout
     end
   end
 end
