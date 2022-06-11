@@ -5,7 +5,6 @@ I18n HTML Extractor
 
 A set of rake tasks to extract strings from html templates into locale files.
 
-
 # Introduction
 
 I created this gem to resolve a practical problem: I had to deal with a big Rails project that had no i18n locales at all.
@@ -19,6 +18,10 @@ It's not yet published as a gem, since it's not ready, but you can start use it 
 ```ruby
 gem 'i18n-html_extractor', github: 'ProGM/i18n-html_extractor'
 ```
+
+# Testing
+
+`bin exec rspec`
 
 # How it works
 
@@ -37,4 +40,3 @@ Running `rake i18n:extract_html:auto`, all strings are moved to i18n locale file
 ### Interactive Mode
 
 Running `rake i18n:extract_html:interactive`, you can decide, for every string, which one to move to translation, and it's translation for every language.
-

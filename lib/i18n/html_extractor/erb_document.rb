@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'nokogiri'
 
 module I18n
@@ -10,6 +12,7 @@ module I18n
       ].freeze
 
       attr_reader :erb_directives
+
       def initialize(document, erb_directives)
         @document = document
         @erb_directives = erb_directives
@@ -20,7 +23,7 @@ module I18n
           result = @document.to_html(indent: 2, encoding: 'UTF-8')
           ERB_REGEXPS.each do |regexp|
             regexp.inverse_replace!(result) do |string_format, data|
-              string_format % { inner_text: erb_directives[data[:inner_text]] }
+              format(string_format, inner_text: erb_directives[data[:inner_text]])
             end
           end
           f.write result
@@ -31,7 +34,7 @@ module I18n
         @document.public_send(name, *args, &block) if @document.respond_to? name
       end
 
-      class <<self
+      class << self
         def parse(filename, verbose: false)
           file_content = ''
           File.open(filename) do |file|
@@ -59,6 +62,7 @@ module I18n
 
         def log_errors(errors, file_content)
           return if errors.empty?
+
           text = file_content.split("\n")
           errors.each do |e|
             puts "Error at line #{e.line}: #{e}".red
@@ -73,7 +77,7 @@ module I18n
             regexp.replace!(text) do |string_format, data|
               key = SecureRandom.uuid
               erb_directives[key] = data[:inner_text]
-              string_format % { inner_text: key }
+              format(string_format, inner_text: key)
             end
           end
           erb_directives

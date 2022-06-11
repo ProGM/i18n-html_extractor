@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe I18n::HTMLExtractor::Match::ErbDirectiveMatch do
   let(:document) do
     I18n::HTMLExtractor::ErbDocument.parse_string(erb_string)
@@ -14,7 +16,8 @@ describe I18n::HTMLExtractor::Match::ErbDirectiveMatch do
       expect(subject.count).to eq(2)
       subject.map(&:replace_text!)
       expect(document.erb_directives[fragment]).to eq(
-        " link_to t('.hello'), some_url, title: t('.some_title') ")
+        " link_to t('.hello'), some_url, title: t('.some_title') "
+      )
     end
   end
 
@@ -27,7 +30,8 @@ describe I18n::HTMLExtractor::Match::ErbDirectiveMatch do
       expect(subject.count).to eq(1)
       subject.map(&:replace_text!)
       expect(document.erb_directives[fragment]).to eq(
-        ' some.email_field :email, placeholder: t(\'.email\'), class: "some" ')
+        ' some.email_field :email, placeholder: t(\'.email\'), class: "some" '
+      )
     end
   end
 
@@ -40,7 +44,8 @@ describe I18n::HTMLExtractor::Match::ErbDirectiveMatch do
       expect(subject.count).to eq(1)
       subject.map(&:replace_text!)
       expect(document.erb_directives[fragment]).to eq(
-        ' some.text_area :text, placeholder: t(\'.some_text\'), class: "some" ')
+        ' some.text_area :text, placeholder: t(\'.some_text\'), class: "some" '
+      )
     end
   end
 
@@ -53,7 +58,8 @@ describe I18n::HTMLExtractor::Match::ErbDirectiveMatch do
       expect(subject.count).to eq(1)
       subject.map(&:replace_text!)
       expect(document.erb_directives[fragment]).to eq(
-        ' some.label :email, t(\'.text\') ')
+        ' some.label :email, t(\'.text\') '
+      )
     end
   end
 
@@ -66,7 +72,8 @@ describe I18n::HTMLExtractor::Match::ErbDirectiveMatch do
       expect(subject.count).to eq(1)
       subject.map(&:replace_text!)
       expect(document.erb_directives[fragment]).to eq(
-        ' some.submit t(\'.text\') ')
+        ' some.submit t(\'.text\') '
+      )
     end
   end
 end

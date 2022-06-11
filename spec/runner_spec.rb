@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe I18n::HTMLExtractor::Runner do
   let(:folder) { 'spec/files/**/*.erb' }
   subject { described_class.new(file_pattern: folder) }
@@ -10,7 +12,7 @@ describe I18n::HTMLExtractor::Runner do
 
   describe '#run_interactive' do
     it 'replaces text in files' do
-      skip 'TODO'
+      pp 'HELLO'
     end
   end
 

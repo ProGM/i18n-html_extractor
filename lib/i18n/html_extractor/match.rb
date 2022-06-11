@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'i18n/html_extractor/match/node_match'
 require 'i18n/html_extractor/match/base_match'
 require 'i18n/html_extractor/match/erb_directive_match'
@@ -32,7 +34,7 @@ module I18n
 
         def form_fields(document)
           document.css('textarea[placeholder],input[placeholder]').select { |input| input['placeholder'].present? }
-                  .reject { |n| n['placeholder'] =~ /\@\@(=?)[a-z0-9\-]+\@\@/ }
+                  .reject { |n| n['placeholder'] =~ /@@(=?)[a-z0-9\-]+@@/ }
                   .map! do |node|
             PlaceholderMatch.create(document, node)
           end.flatten.compact

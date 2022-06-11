@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module I18n
   module HTMLExtractor
     class Runner
@@ -53,6 +55,7 @@ module I18n
 
       def add_translations!(key, text, default_locale: nil)
         return prompt_and_add_translation!(default_locale, key, default_text: text) if default_locale
+
         prompt_and_add_translation!(I18n.default_locale, key, default_text: text)
 
         I18n.available_locales.each do |locale|

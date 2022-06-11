@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe I18n::HTMLExtractor::Match::PlaceholderMatch do
   let(:document) do
     I18n::HTMLExtractor::ErbDocument.parse_string(text)

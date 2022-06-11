@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module I18n
   module HTMLExtractor
     module Cli
@@ -5,7 +7,7 @@ module I18n
         answer = nil
         while answer.blank?
           print "#{message} #{format_default(default)}:"
-          answer = STDIN.gets.chomp.presence || default
+          answer = $stdin.gets.chomp.presence || default
         end
         answer
       rescue Interrupt
@@ -15,9 +17,10 @@ module I18n
       def confirm(message, positive, negative, default: nil)
         loop do
           print "#{message} #{format_answers(positive, negative)}: "
-          answer = STDIN.gets.chomp.presence || default
+          answer = $stdin.gets.chomp.presence || default
           return true if match_answer?(positive, answer)
           return false if match_answer?(negative, answer)
+
           puts "Invalid answer. Please insert #{formatted_positive} or #{formatted_negative}".red
         end
       rescue Interrupt
@@ -31,7 +34,7 @@ module I18n
       end
 
       def format_answers(positive, negative)
-        "[(#{positive[0].green})#{positive[1..-1]}/(#{negative[0].red})#{negative[1..-1]}]"
+        "[(#{positive[0].green})#{positive[1..]}/(#{negative[0].red})#{negative[1..]}]"
       end
 
       def match_answer?(expected, got)

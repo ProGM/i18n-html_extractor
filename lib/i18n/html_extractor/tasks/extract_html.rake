@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :i18n do
   namespace :extract_html do
     task :interactive, [:file_pattern, :locale] do |_, args|
@@ -5,8 +7,10 @@ namespace :i18n do
 
       missing_translations = i18n.missing_keys
 
-      raise "There are some translation missing. Fix before running this task:\n\n"\
-           "#{missing_translations.inspect}".red if missing_translations.any?
+      if missing_translations.any?
+        raise "There are some translation missing. Fix before running this task:\n\n"\
+             "#{missing_translations.inspect}".red
+      end
       cli = I18n::HTMLExtractor::Runner.new args
       cli.run_interactive
     end
@@ -16,8 +20,10 @@ namespace :i18n do
 
       missing_translations = i18n.missing_keys
 
-      raise "There are some translation missing. Fix before running this task:\n\n"\
-           "#{missing_translations.inspect}".red if missing_translations.any?
+      if missing_translations.any?
+        raise "There are some translation missing. Fix before running this task:\n\n"\
+             "#{missing_translations.inspect}".red
+      end
 
       cli = I18n::HTMLExtractor::Runner.new args
       cli.test_run
@@ -28,8 +34,10 @@ namespace :i18n do
 
       missing_translations = i18n.missing_keys
 
-      raise "There are some translation missing. Fix before running this task:\n\n"\
-           "#{missing_translations.inspect}".red if missing_translations.any?
+      if missing_translations.any?
+        raise "There are some translation missing. Fix before running this task:\n\n"\
+             "#{missing_translations.inspect}".red
+      end
 
       cli = I18n::HTMLExtractor::Runner.new args
       cli.run
