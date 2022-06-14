@@ -1,5 +1,5 @@
 describe I18n::HTMLExtractor::Runner do
-  let(:folder) { 'spec/files/**/*.erb' }
+  let(:folder) { 'spec/input/*.erb' }
   subject { described_class.new(file_pattern: folder) }
 
   describe '#run' do
