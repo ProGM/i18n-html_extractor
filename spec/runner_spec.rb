@@ -6,10 +6,18 @@ describe I18n::HTMLExtractor::Runner do
     it 'replaces text in files' do
       skip 'TODO'
     end
+
+    it 'outputs strings to translate in specified string' do
+      skip 'TODO'
+    end
   end
 
   describe '#run_interactive' do
     it 'replaces text in files' do
+      skip 'TODO'
+    end
+
+    it 'outputs strings to translate in specified string' do
       skip 'TODO'
     end
   end

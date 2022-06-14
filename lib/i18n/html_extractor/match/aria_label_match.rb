@@ -15,6 +15,7 @@ module I18n
         def replace_text!
           key = SecureRandom.uuid
           document.erb_directives[key] = translation_key_object
+          pp document.erb_directives
           node['aria-label'] = "@@=#{key}@@"
         end
       end
