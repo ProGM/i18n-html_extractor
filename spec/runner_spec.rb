@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 describe I18n::HTMLExtractor::Runner do
   let(:folder) { 'spec/files/**/*.erb' }
   subject { described_class.new(file_pattern: folder) }

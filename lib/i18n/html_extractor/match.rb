@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'i18n/html_extractor/match/node_match'
 require 'i18n/html_extractor/match/base_match'
 require 'i18n/html_extractor/match/erb_directive_match'

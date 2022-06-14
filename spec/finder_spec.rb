@@ -1,5 +1,3 @@
-# frozen_string_literal: false
-
 describe I18n::HTMLExtractor::Match::Finder do
   let(:document) do
     I18n::HTMLExtractor::ErbDocument.parse_string(erb_string)
