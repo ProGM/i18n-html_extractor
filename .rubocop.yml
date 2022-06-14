@@ -2,3 +2,7 @@ Layout/LineLength:
   Max: 120
 AllCops:
   NewCops: disable
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Metrics/BlockLength:
+  IgnoredMethods: ['describe', 'context']

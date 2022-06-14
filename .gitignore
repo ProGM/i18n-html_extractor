@@ -10,3 +10,4 @@ bin
 bundle
 .bundle
 specs.out
+log/
