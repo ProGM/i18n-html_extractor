@@ -12,7 +12,7 @@ module I18n
         end
 
         def translation_key_object
-          "t('.#{key}')"
+          "_('#{key}')"
         end
 
         def replace_text!
@@ -22,7 +22,7 @@ module I18n
         attr_writer :key
 
         def key
-          @key ||= text.parameterize.underscore
+          @key ||= text.parameterize(preserve_case: true, separator: '_')
         end
       end
     end

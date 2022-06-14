@@ -14,7 +14,7 @@ describe I18n::HTMLExtractor::Match::ErbDirectiveMatch do
       expect(subject.count).to eq(2)
       subject.map(&:replace_text!)
       expect(document.erb_directives[fragment]).to eq(
-        " link_to t('.hello'), some_url, title: t('.some_title') "
+        " link_to _('Hello'), some_url, title: _('Some_title') "
       )
     end
   end
@@ -28,7 +28,7 @@ describe I18n::HTMLExtractor::Match::ErbDirectiveMatch do
       expect(subject.count).to eq(1)
       subject.map(&:replace_text!)
       expect(document.erb_directives[fragment]).to eq(
-        ' some.email_field :email, placeholder: t(\'.email\'), class: "some" '
+        ' some.email_field :email, placeholder: _(\'email\'), class: "some" '
       )
     end
   end
@@ -42,7 +42,7 @@ describe I18n::HTMLExtractor::Match::ErbDirectiveMatch do
       expect(subject.count).to eq(1)
       subject.map(&:replace_text!)
       expect(document.erb_directives[fragment]).to eq(
-        ' some.text_area :text, placeholder: t(\'.some_text\'), class: "some" '
+        ' some.text_area :text, placeholder: _(\'some_text\'), class: "some" '
       )
     end
   end
@@ -56,7 +56,7 @@ describe I18n::HTMLExtractor::Match::ErbDirectiveMatch do
       expect(subject.count).to eq(1)
       subject.map(&:replace_text!)
       expect(document.erb_directives[fragment]).to eq(
-        ' some.label :email, t(\'.text\') '
+        ' some.label :email, _(\'text\') '
       )
     end
   end
@@ -70,7 +70,7 @@ describe I18n::HTMLExtractor::Match::ErbDirectiveMatch do
       expect(subject.count).to eq(1)
       subject.map(&:replace_text!)
       expect(document.erb_directives[fragment]).to eq(
-        ' some.submit t(\'.text\') '
+        ' some.submit _(\'text\') '
       )
     end
   end
