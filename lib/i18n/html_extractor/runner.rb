@@ -71,7 +71,7 @@ module I18n
       def add_translation!(locale, key, value)
         new_keys = i18n.missing_keys(locales: [locale]).set_each_value!(value)
         i18n.data.merge! new_keys
-        puts "Added _('#{key}'), translated in #{locale} as #{value}:".green
+        puts "Added _('#{key}'), translated in #{locale} as #{value}.".green
         puts new_keys.inspect
       end
 

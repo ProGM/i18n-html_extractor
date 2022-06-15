@@ -3,7 +3,7 @@ output_dir = "#{Rails.root}/spec/output"
 
 describe 'tasks' do
   before(:each) { FileUtils.copy_entry("#{Rails.root}/spec/input", "#{Rails.root}/spec/tmp") }
-  # after(:each) { FileUtils.rm_rf("#{Rails.root}/spec/tmp") }
+  after(:each) { FileUtils.rm_rf("#{Rails.root}/spec/tmp") }
 
   describe 'i18n:extract_html:list' do
     it 'Returns a list of matched data' do

@@ -26,4 +26,12 @@ describe I18n::HTMLExtractor::Match::Finder do
       end
     end
   end
+
+  context 'does not add an empty element' do
+    let(:erb_string) { '<div></div>' }
+
+    it 'extracts a list of matches' do
+      expect(matches.count).to eq(0)
+    end
+  end
 end
