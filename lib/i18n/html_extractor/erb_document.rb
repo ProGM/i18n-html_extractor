@@ -32,6 +32,8 @@ module I18n
         @document.public_send(name, *args, &block) if @document.respond_to? name
       end
 
+      def respond_to_missing?; end
+
       class << self
         def parse(filename, verbose: false)
           file_content = ''

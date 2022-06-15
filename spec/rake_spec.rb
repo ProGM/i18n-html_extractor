@@ -19,7 +19,7 @@ describe 'tasks' do
     it 'Returns and replaces a list of matched data' do
       expect do
         expect do
-          Rake::Task['i18n:extract_html:auto'].invoke("#{input_dir}/*.erb")
+          Rake::Task['i18n:extract_html:auto'].invoke('spec/tmp/*.erb')
         end.to output(/Found "Hello".*/).to_stdout
       end.not_to raise_exception
 

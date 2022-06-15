@@ -50,11 +50,11 @@ data:
 search:
   ## Paths or `File.find` patterns to search in:
   paths:
-   - spec/files
+   - spec/input
 
   ## Root directories for relative keys resolution.
   relative_roots:
-   - spec/files
+   - spec/input
   #   - app/controllers
   #   - app/helpers
   #   - app/mailers

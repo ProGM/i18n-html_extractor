@@ -3,9 +3,11 @@ describe I18n::HTMLExtractor::Runner do
   subject { described_class.new(file_pattern: folder) }
 
   describe '#run' do
-    it 'replaces text in files' do
-      skip 'TODO'
-    end
+    # it 'replaces text in files' do
+    #   expect { subject.run }.to output(%r{Found ".+" in [a-zA-Z/\-.]+}).to_stdout
+
+    #   pp subject
+    # end
 
     it 'outputs strings to translate in specified string' do
       skip 'TODO'
