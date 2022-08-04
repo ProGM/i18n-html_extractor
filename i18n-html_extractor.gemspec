@@ -27,17 +27,17 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.files = Dir.glob('{bin,lib,config}/**/*') + %w[README.md Gemfile i18n-html_extractor.gemspec]
 
-  s.add_dependency('activesupport', '> 3.2', '< 5.1')
-  s.add_dependency('colored')
-  s.add_dependency('i18n')
-  s.add_dependency('i18n-tasks')
-  s.add_dependency('nokogiri')
-  s.add_dependency('railties', '> 3.2', '< 5.1')
-  s.add_dependency('rake')
+  s.add_dependency('activesupport', '~> 7.0')
+  s.add_dependency('colored', '~> 1.2')
+  s.add_dependency('i18n', '~> 1.12')
+  s.add_dependency('i18n-tasks', '~> 1.0')
+  s.add_dependency('nokogiri', '~> 1.13')
+  s.add_dependency('railties', '~> 7.0')
+  s.add_dependency('rake', '~> 13.0')
 
-  s.add_development_dependency('guard')
-  s.add_development_dependency('guard-rubocop')
-  s.add_development_dependency('pry')
-  s.add_development_dependency('rubocop')
-  s.add_development_dependency('simplecov')
+  s.add_development_dependency('guard', '~> 2.18')
+  s.add_development_dependency('guard-rubocop', '~> 1.5')
+  s.add_development_dependency('pry', '~> 0.14')
+  s.add_development_dependency('rubocop', '~> 1.32')
+  s.add_development_dependency('simplecov', '~> 0.21')
 end
