@@ -12,3 +12,5 @@ group 'test' do
 end
 
 gemspec
+
+gem "erb_lint", "~> 0.1.3"

@@ -1,4 +1,4 @@
-describe I18n::HTMLExtractor::Match::AriaLabelMatch do
+describe I18n::HTMLExtractor::Match::AriaMatch do
   let(:document) do
     I18n::HTMLExtractor::ErbDocument.parse_string(el)
   end

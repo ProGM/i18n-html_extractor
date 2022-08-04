@@ -27,6 +27,14 @@ describe 'tasks' do
       expect(File.read("#{input_dir}/bug.html.erb")).to eql(File.read("#{output_dir}/bug.html.erb"))
       expect(File.read("#{input_dir}/test.html.erb")).to eql(File.read("#{output_dir}/test.html.erb"))
     end
+
+    it 'correctly replaces aria- attributes' do
+      expect do
+        Rake::Task['i18n:extract_html:auto'].invoke('spec/tmp/*.erb')
+      end.not_to raise_exception
+
+      expect(File.read("#{input_dir}/aria.html.erb")).to eql(File.read("#{output_dir}/aria.html.erb"))
+    end
   end
 
   # describe 'i18n:extract_html:interactive' do

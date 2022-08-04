@@ -3,7 +3,7 @@
 module I18n
   module HTMLExtractor
     module Match
-      class AriaLabelMatch < BaseMatch
+      class AriaMatch < BaseMatch
         def self.create(document, node)
           if node['aria-label'].present?
             [new(document, node, node['aria-label'])]

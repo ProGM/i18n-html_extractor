@@ -3,7 +3,7 @@ require 'i18n/html_extractor/match/base_match'
 require 'i18n/html_extractor/match/erb_directive_match'
 require 'i18n/html_extractor/match/placeholder_match'
 require 'i18n/html_extractor/match/plain_text_match'
-require 'i18n/html_extractor/match/aria_label_match'
+require 'i18n/html_extractor/match/aria_match'
 
 module I18n
   module HTMLExtractor
@@ -43,7 +43,7 @@ module I18n
           document.css('[aria-label]').select { |el| el['aria-label'].present? }
                   .reject { |n| n['aria-label'] =~ /@@(=?)[a-z0-9\-]+@@/ }
                   .map! do |node|
-            AriaLabelMatch.create(document, node)
+            AriaMatch.create(document, node)
           end.flatten.compact
         end
 
