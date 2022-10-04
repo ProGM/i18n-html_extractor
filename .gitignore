@@ -12,3 +12,6 @@ bundle
 specs.out
 log/
 tmp/
+/vendor/gems/*
+/vendor/ruby/*
+*.gem
