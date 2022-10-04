@@ -1,0 +1,55 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "rake.autoDetect": "off",
+  "tasks": [
+    {
+      "label": "rspec: run tests in file",
+      "type": "shell",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "command": "rspec -P ${file}",
+      "problemMatcher": {
+        "owner": "ruby",
+        "fileLocation": "absolute",
+        "pattern": {
+          "regexp": "^.+#.+L\\d+ \\[(.+):(\\d+)\\]:$",
+          "file": 1,
+          "line": 2
+        }
+      },
+      "runOptions": {
+        "reevaluateOnRerun": false
+      }
+    },
+    {
+      "label": "rspec: run test on line",
+      "type": "shell",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "command": "rspec ${file}:${lineNumber}",
+      "problemMatcher": [],
+      "runOptions": {
+        "reevaluateOnRerun": false
+      }
+    },
+    {
+      "label": "rspec: run all tests",
+      "type": "shell",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "command": "rspec",
+      "problemMatcher": [],
+      "runOptions": {
+        "reevaluateOnRerun": false
+      }
+    }
+  ]
+}

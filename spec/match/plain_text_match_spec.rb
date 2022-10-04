@@ -14,6 +14,7 @@ describe I18n::HTMLExtractor::Match::PlainTextMatch do
       result = subject.first
       expect(result.text).to eq('Some Text')
       result.replace_text!
+      
       expect(node.text).to match(/^@@=.*@@$/)
       expect(document.erb_directives.keys.count).to eq(1)
     end
