@@ -1,11 +1,11 @@
-describe I18n::HTMLExtractor::Runner do
-  before(:each) do
-    FileUtils.mkdir_p("#{Rails.root}/spec/tmp")
-    FileUtils.copy_entry("#{Rails.root}/spec/input/runner.html.erb", "#{Rails.root}/spec/tmp/runner.html.erb")
-  end
-  # after(:each) { FileUtils.rm_rf("#{Rails.root}/spec/tmp") }
+input_dir = "#{Rails.root}/spec/input"
+tmp_dir = "#{Rails.root}/spec/tmp"
 
-  let(:file) { 'spec/tmp/runner.html.erb' }
+describe I18n::HTMLExtractor::Runner do
+  before(:each) { FileUtils.copy_entry(input_dir, tmp_dir) }
+  after(:each) { FileUtils.rm_rf(tmp_dir) }
+
+  let(:file) { "#{tmp_dir}/test.html.erb" }
   subject { described_class.new(file_pattern: file) }
 
   describe '#run' do
