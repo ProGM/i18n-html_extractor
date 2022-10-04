@@ -21,7 +21,11 @@ gem 'i18n-html_extractor', github: 'ProGM/i18n-html_extractor'
 
 # Testing
 
+To run the test suite:
 `bin exec rspec`
+
+To keep the test suite and linter running while you develop:
+`bin exec guard`
 
 # How it works
 
