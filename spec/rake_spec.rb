@@ -28,18 +28,16 @@ describe 'tasks' do
     end
   end
 
-  # describe 'i18n:extract_html:interactive' do
-  #   it 'Returns and replaces list of matched data' do
-  #     allow($stdin).to receive(:gets).and_return('y')
-  #     expect do
-  #       expect do
-  #         Rake::Task['i18n:extract_html:interactive'].invoke("#{spec_dir}/*.erb")
-  #       end.to output(/Found "Hello".*/).to_stdout
-  #     end.to change {
-  #       File.read("#{spec_dir}/file.html.erb")
-  #     }.to('<%= link_to t(\'.y\') %>').and(change do
-  #       File.read("#{spec_dir}/bug.html.erb")
-  #     end.to('<div><%=t(\'.y\')%></div>'))
-  #   end
-  # end
+  describe 'i18n:extract_html:interactive' do
+    it 'Returns and replaces list of matched data' do
+      allow($stdin).to receive(:gets).and_return('y')
+      expect do
+        expect do
+          Rake::Task['i18n:extract_html:interactive'].invoke("#{tmp_dir}/*.erb")
+        end.to output(/Found "Hello".*/).to_stdout
+      end.to change {
+        File.read("#{tmp_dir}/test.html.erb")
+      }.to include('<%= link_to _(\'y\') %>')
+    end
+  end
 end
